@@ -66,7 +66,7 @@ export default function Navbar() {
                         </svg>
                     </label>
                     <div className="flex gap-[10px] items-center">
-                        <h1>{userdata.displayName}</h1>
+                        <h1>{userdata?.displayName}</h1>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
