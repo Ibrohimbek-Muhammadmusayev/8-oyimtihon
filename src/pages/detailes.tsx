@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom"
 import { db } from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { notification } from 'antd';
 
 type DataType = {
     title: string,
@@ -18,7 +20,12 @@ type DataType = {
     price : number
 }
 
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
 export default function Datailes(){
+    const userdata:any = useSelector((state: {todos: {}}) => state.todos);
+    const [user] = useState(userdata.userdata)
+    const [count, setCount]= useState(1);
     const [data, setData] = useState<DataType>()
     const { id } = useParams();
     const getdatafunc = async ()=>{
@@ -28,13 +35,33 @@ export default function Datailes(){
         setData(dataadres as any)
     }
 
+    const [api, contextHolder] = notification.useNotification();
+
     useEffect(()=> {
         getdatafunc()
     }, [])
 
+    const handleCount = (e: any)=> {
+        setCount(e.target.value)
+    }
+    
+    const addcard = async ()=> {
+        await addDoc(collection(db, `${user.uid}`), {
+            ...data,
+            count: count,
+        });
+        const openNotificationWithIcon = (type: NotificationType) => {
+            api[type]({
+              message: 'Maxsulot qoshildi',
+            });
+        };
+        openNotificationWithIcon('success');
+    }
+
     return (
         <div>
             <div className=" max-w-[1000px] min-h-[800px] flex flex-col gap-[30px] mx-auto pt-[50px]">
+            {contextHolder}
                 <div className="flex justify-center items-center py-[20px] px-[20px] bg-slate-400 w-full h-[100%] rounded-[12px] flex-wrap gap-[10px]">
                         {data == null ? (
                             <span className="loading loading-dots loading-lg"></span>
@@ -62,8 +89,12 @@ export default function Datailes(){
                     </div>
                     <div className="flex flex-col w-[150px] justify-between">
                         <div className="flex flex-col gap-[10px]">
-                            <button className="btn bg-primary-content">Add To Cart</button>
-                            <input type="number" placeholder="product count" className="input input-bordered w-full max-w-xs" />
+                            <button onClick={addcard} className="btn bg-primary-content">Add To Cart</button>
+                            <div className="flex gap-[4px]">
+                                <button onClick={()=> {setCount(count - 1 )}} className="btn">-</button>
+                                <input value={count} onChange={(e)=> handleCount(e)} type="number" placeholder="product count" className="input input-bordered w-[60px]" />
+                                <button onClick={()=> {setCount(count + 1 )}} className="btn">+</button>
+                            </div>
                         </div>
                         <NavLink to={"/"}>
                             <button className="btn w-[150px] bg-base-300">Exit</button>

@@ -9,6 +9,7 @@ import Statistika from "./pages/statistika";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Datailes from "./pages/detailes";
+import Card from "./pages/card";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,6 +32,10 @@ function App() {
         {
           path: ":id",
           element: <Datailes/>,
+        },
+        {
+          path: "/card",
+          element: <Card/>,
         }
       ]
     },

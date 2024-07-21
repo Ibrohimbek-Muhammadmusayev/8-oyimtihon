@@ -26,6 +26,7 @@ export default function Home() {
 
     const [api, contextHolder] = notification.useNotification();
     const handleDelete = async (id : string) => {
+        (document.getElementById(`my_modal_${id}`) as any).close();
         await deleteDoc(doc(db, "products", `${id}`));
         const openNotificationWithIcon = (type: NotificationType) => {
             api[type]({
@@ -33,6 +34,10 @@ export default function Home() {
             });
         };
         openNotificationWithIcon('success');
+    }
+
+    const openmodal = (id: string)=> {
+        (document.getElementById(`my_modal_${id}`) as any).showModal();
     }
     
     useEffect(()=> {
@@ -52,13 +57,30 @@ export default function Home() {
             <div className="w-full pb-[30px] border-b">
                 <h1 className="text-[30px] font-semibold">Recipes</h1>
             </div>
-            <div className="mt-[10px] w-full flex justify-center gap-[20px] flex-wrap">
+            <div className="mt-[10px] mb-[10px] w-full flex justify-center gap-[20px] flex-wrap">
                 {data.length != 0 ? (
                     data?.map((item : DataType)=> (
                         <div key={item.id} className="w-[350px] h-[400px] overflow-hidden rounded-[8px] bg-primary-content">
-                            <button onClick={()=> handleDelete(item.id)} className="w-[30px] border hover:bg-primary-content cursor-pointer ml-[310px] mt-[10px] flex justify-center items-center h-[30px] bg-slate-400 rounded-full">
+                            <button onClick={()=>{
+                                openmodal(item.id)
+                            }} className="w-[30px] border hover:bg-primary-content cursor-pointer ml-[310px] mt-[10px] flex justify-center items-center h-[30px] bg-slate-400 rounded-full">
                                 <img className="w-[25px] h-[25px]" src="./../../public/close.svg" alt="close logo" />
+                                {/* <h1>X</h1> */}
                             </button>
+                            <dialog id={`my_modal_${item.id}`} className="modal">
+                                <div className="modal-box w-[500px] max-w-5xl">
+                                    <h3 className="font-bold text-lg">Do you want to delete this recipe ?</h3>
+                                    {/* <p className="py-4">Click the button below to close</p> */}
+                                    <div className="flex justify-between">
+                                        <button onClick={()=> {handleDelete(item.id)}} className="btn bg-error mt-[24px]">Delete</button>
+                                        <div className="modal-action">
+                                            <form method="dialog">
+                                                <button className="btn bg-primary-content">Exit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </dialog>
                             <NavLink to={item.id}>
                                 <div className="px-[30px] h-[190px] pt-[5px] bg-primary-content">
                                     <h1 className="text-[20px] font-medium">{item.title}</h1>
@@ -84,7 +106,7 @@ export default function Home() {
                     ))
                 ) : (
                     <div className="">
-                        <img src="./../../public/130.gif" alt="loading"/>
+                        <span className="loading loading-bars w-[80px]"></span>
                     </div>
                 )}
             </div>
