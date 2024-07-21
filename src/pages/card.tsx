@@ -62,27 +62,33 @@ export default function Card() {
                 <div className="flex gap-[100px] justify-center mt-[50px] flex-wrap w-full">
                     {/* card wrapper */}
                     <div className="">
-                        <div className="flex flex-col gap-[30px] w-[700px]">
-                            {data?.map((item)=> (
-                                <div key={item.id} className="max-w-[700px] sm:max-w-[500px] md:max-w-[700px] rounded-[12px] p-[10px] flex justify-between items-center h-[100px] border-b">
-                                    <div className="flex items-center gap-[20px]">
-                                        <img className="w-[80px] h-[60px] rounded-[8px]" src={item.images[0]} alt="images" />
+                        {data.length == 0 ? (
+                            <div className="w-[700px] flex justify-center">
+                                <h1 className="text-[25px] font-semibold">No data</h1>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col gap-[30px] w-[700px]">
+                                {data?.map((item)=> (
+                                    <div key={item.id} className="max-w-[700px] sm:max-w-[500px] md:max-w-[700px] rounded-[12px] p-[10px] flex justify-between items-center h-[100px] border-b">
+                                        <div className="flex items-center gap-[20px]">
+                                            <img className="w-[80px] h-[60px] rounded-[8px]" src={item.images[0]} alt="images" />
+                                            <div className="">
+                                                <h1>{item.title}</h1>
+                                                <p>{item.price}.000 so'm</p>
+                                            </div>
+                                            <div className="flex items-center gap-[10px]">
+                                                <button className="w-[35px] rounded-[12px] text-[22px] bg-primary-content h-[35px]">-</button>
+                                                <p>{item.count}</p>
+                                                <button className="w-[35px] rounded-[12px] text-[22px] bg-primary-content h-[35px]">+</button>
+                                            </div>
+                                        </div>
                                         <div className="">
-                                            <h1>{item.title}</h1>
-                                            <p>{item.price}.000 so'm</p>
-                                        </div>
-                                        <div className="flex items-center gap-[10px]">
-                                            <button className="w-[35px] rounded-[12px] text-[22px] bg-primary-content h-[35px]">-</button>
-                                            <p>{item.count}</p>
-                                            <button className="w-[35px] rounded-[12px] text-[22px] bg-primary-content h-[35px]">+</button>
+                                            <button onClick={()=> {handleDelete(item.id)}} className="btn w-[50px] h-[20px] bg-error">delete</button>
                                         </div>
                                     </div>
-                                    <div className="">
-                                        <button onClick={()=> {handleDelete(item.id)}} className="btn w-[50px] h-[20px] bg-error">delete</button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                     {/* sub total */}
                     <div className="">
