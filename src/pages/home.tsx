@@ -84,7 +84,7 @@ export default function Home() {
                     ))
                 ) : (
                     <div className="">
-                        <img src="./../../public/159.gif" alt="loading"/>
+                        <img src="./../../public/130.gif" alt="loading"/>
                     </div>
                 )}
             </div>
