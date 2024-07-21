@@ -71,7 +71,7 @@ export default function Datailes(){
                             ))
                         )}
                 </div>
-                <div className="flex justify-between">
+                <div className="flex flex-wrap justify-between">
                     <div className="flex flex-col gap-[20px] text-left">
                         <h1 className="text-[25px] font-semibold">{data?.title}</h1>
                         <div className="flex gap-[10px]">
