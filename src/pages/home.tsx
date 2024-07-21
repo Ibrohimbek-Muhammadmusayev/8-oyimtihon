@@ -64,8 +64,8 @@ export default function Home() {
                             <button onClick={()=>{
                                 openmodal(item.id)
                             }} className="w-[30px] border hover:bg-primary-content cursor-pointer ml-[310px] mt-[10px] flex justify-center items-center h-[30px] bg-slate-400 rounded-full">
-                                <img className="w-[25px] h-[25px]" src="./../../public/close.svg" alt="close logo" />
-                                {/* <h1>X</h1> */}
+                                {/* <img className="w-[25px] h-[25px]" src="./../../public/close.svg" alt="close logo" /> */}
+                                <h1>X</h1>
                             </button>
                             <dialog id={`my_modal_${item.id}`} className="modal">
                                 <div className="modal-box w-[500px] max-w-5xl">
