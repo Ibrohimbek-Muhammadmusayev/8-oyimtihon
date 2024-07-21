@@ -66,12 +66,12 @@ export default function Navbar() {
                         </svg>
                     </label>
                     <div className="flex gap-[10px] items-center">
-                        <h1>{userdata ? userdata?.displayName : window.location.replace('/')}</h1>
+                        <h1>{userdata?.displayName}</h1>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
                                     <img
-                                        src={userdata.photoURL ? userdata.photoURL : 'https://as2.ftcdn.net/v2/jpg/04/92/30/77/1000_F_492307715_NnDCfatajhsm2F9VQJAFsJVTZGlZ1gTF.jpg'}
+                                        src={userdata?.photoURL ? userdata?.photoURL : 'https://as2.ftcdn.net/v2/jpg/04/92/30/77/1000_F_492307715_NnDCfatajhsm2F9VQJAFsJVTZGlZ1gTF.jpg'}
                                     />
                                 </div>
                             </div>
